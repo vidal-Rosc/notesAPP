@@ -27,3 +27,6 @@ Uvicorn for ASGI server
 
 🚀 Deployment Ready:
 This application can be easily deployed to platforms like Heroku or Vercel using Docker and is configured to be highly portable and scalable.
+
+📄 Future Enhancements:
+Full user management system (password reset, account deactivation)
