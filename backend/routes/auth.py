@@ -1,41 +1,35 @@
-from fastapi import APIRouter, HTTPException
-from models.user import User
-from database.connection import users_collection
-from core.security import hash_password, verify_password, create_access_token
-from datetime import timedelta
+from fastapi import APIRouter, HTTPException, Depends
+from pymongo import MongoClient
+from core.security import create_access_token, get_password_hash, verify_password
+from core.config import MONGODB_URI, MONGODB_DB
 
 auth_router = APIRouter()
 
-# Ruta de registro
+# Conectar a MongoDB
+client = MongoClient(MONGODB_URI)
+db = client[MONGODB_DB]
+users_collection = db["users"]
+
+# Ruta para registrar un nuevo usuario
 @auth_router.post("/register")
-async def register(user: User):
-    # Verifica si el usuario ya existe
-    if users_collection.find_one({"username": user.username}):
-        raise HTTPException(status_code=400, detail="Registered user")
+async def register(username: str, password: str):
+    user = users_collection.find_one({"username": username})
+    if user:
+        raise HTTPException(status_code=400, detail="El usuario ya existe")
     
-    # Hashear la contraseña antes de guardarla
-    hashed_password = hash_password(user.password)
-
-    # Guardar el usuario con la contraseña hasheada
-    users_collection.insert_one({"username": user.username, "password": hashed_password})
+    hashed_password = get_password_hash(password)
+    users_collection.insert_one({"username": username, "password": hashed_password})
     
-    return {"message": "User successfully registered"}
+    return {"message": "User Susccesfully registered"}
 
-# Ruta de login
+# Ruta para hacer login
 @auth_router.post("/login")
-async def login(user: User):
-    # Buscar el usuario en la base de datos
-    db_user = users_collection.find_one({"username": user.username})
+async def login(username: str, password: str):
+    user = users_collection.find_one({"username": username})
+    if not user or not verify_password(password, user["password"]):
+        raise HTTPException(status_code=400, detail="Wrong credentials")
     
-    if not db_user:
-        raise HTTPException(status_code=400, detail="User not found")
-    
-    # Verificar la contraseña ingresada con la contraseña hasheada en la base de datos
-    if not verify_password(user.password, db_user['password']):
-        raise HTTPException(status_code=400, detail="Wrong password, try again..")
-
-    # Crear un token JWT
-    access_token_expires = timedelta(minutes=30)
-    access_token = create_access_token(data={"sub": user.username}, expires_delta=access_token_expires)
-    
+    # Crear token JWT
+    access_token = create_access_token(data={"sub": username})
     return {"access_token": access_token, "token_type": "bearer"}
+
