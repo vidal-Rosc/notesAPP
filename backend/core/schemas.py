@@ -86,3 +86,12 @@ class Note(NoteBase):
     class Config:
         orm_mode = True
 
+# Esquema para los tokens
+class Token(BaseModel):
+    access_token: str
+    refresh_token: str
+    token_type: str
+
+# Esquema para refrescar el access token
+class TokenRefresh(BaseModel):
+    refresh_token: str

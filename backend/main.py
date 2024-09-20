@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from routes.auth import auth_router
 from routes.notes import notes_router
+from routes.protected import protected_router
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
