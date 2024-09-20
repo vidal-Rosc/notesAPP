@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends
 from pymongo import MongoClient
-from core.security import create_access_token, get_password_hash, verify_password
+from core.security import create_access_token, get_password_hash, verify_password, get_current_user
 from core.config import MONGODB_URI, MONGODB_DB
 from core.schemas import UserCreate, UserLogin  # Importamos los esquemas
 
