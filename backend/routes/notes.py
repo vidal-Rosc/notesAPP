@@ -47,4 +47,4 @@ async def delete_existing_note(note_id: str, current_user: str = Depends(get_cur
     success = delete_note(db, current_user, note_id)
     if not success:
         raise HTTPException(status_code=404, detail="Note NOT found")
-    return {"message": "Nota eliminada exitosamente"}
+    return {"message": "Note deleted"}
