@@ -2,11 +2,12 @@ from fastapi import FastAPI
 from routes.auth import auth_router
 from routes.notes import notes_router
 from routes.protected import protected_router
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.cors import CORSMiddleware # type: ignore
+from core.config import ALLOWED_ORIGINS
 
 app = FastAPI(
     title="API de Notes",
-    description="API to manage notes with JWT authentication",
+    description="API to manage notes with JWT authentication & refresh Tokens",
     version="1.0.0",
 )
 
