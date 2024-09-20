@@ -1,12 +1,14 @@
 from datetime import datetime, timedelta
-from jose import JWTError, jwt
-from passlib.context import CryptContext
-from fastapi import Depends, HTTPException
-from fastapi.security import OAuth2PasswordBearer
-from core.config import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
+from pydantic import BaseModel, Field, validator
+from typing import Optional
 
-#Usuarios
-#Creacion de Usuarios
+###### Usuarios #####
+
+# Tipos de fuentes permitidas
+ALLOWED_FONT_TYPES = ["Arial", "Times New Roman", "Courier New", "Georgia", "Verdana"]
+
+
+#Registro de Usuarios
 class UserCreate(BaseModel):
     username: str = Field(..., min_length=3, max_length=50)
     password: str = Field(..., min_length=6)
@@ -21,22 +23,60 @@ class UserLogin(BaseModel):
     username: str
     password: str
 
-#Notas
+###### Notas #####
 #Define los campos básicos de una nota.
 class NoteBase(BaseModel):
     title: str = Field(..., min_length=1, max_length=100)
     content: str = Field(..., min_length=1)
+    font_type: Optional[str] = Field("Arial", description="Font type")
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None
+    
+    @validator('font_type')
+    def validate_font_type(cls, v):
+        if v not in ALLOWED_FONT_TYPES:
+            raise ValueError(f"Font type not allowed. The font type allowed: {', '.join(ALLOWED_FONT_TYPES)}")
+        return v
+    
+    @validator('title')
+    def title_not_empty(cls, v):
+        if not v.strip():
+            raise ValueError('Empty title  are NOT allowed')
+        return v
+    
+    @validator('content')
+    def content_not_empty(cls, v):
+        if not v.strip():
+            raise ValueError('Empty content are NOT allowed')
+        return v
 
 #Hereda de NoteBase y se utiliza para la creación de notas
 class NoteCreate(NoteBase):
     pass
 
-# Define los campos que pueden actualizarse.
+# Esquema para actualizar una nota existente
 class NoteUpdate(BaseModel):
     title: Optional[str] = Field(None, min_length=1, max_length=100)
     content: Optional[str] = Field(None, min_length=1)
+    font_type: Optional[str] = Field(None, description="Font type")
+
+    @validator('font_type')
+    def validate_font_type(cls, v):
+        if v and v not in ALLOWED_FONT_TYPES:
+            raise ValueError(f"Font type not allowed. The font type allowed: {', '.join(ALLOWED_FONT_TYPES)}")
+        return v
+
+    @validator('title')
+    def title_not_empty(cls, v):
+        if v is not None and not v.strip():
+            raise ValueError('Empty title  are NOT allowed')
+        return v
+
+    @validator('content')
+    def content_not_empty(cls, v):
+        if v is not None and not v.strip():
+            raise ValueError('Empty content are NOT allowed')
+        return v
 
 # Representa una nota completa, incluyendo el id y el owner (propietario).
 class Note(NoteBase):
@@ -45,3 +85,4 @@ class Note(NoteBase):
 
     class Config:
         orm_mode = True
+
