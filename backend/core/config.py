@@ -15,3 +15,8 @@ REFRESH_TOKEN_EXPIRE_MINUTES = int(os.getenv("REFRESH_TOKEN_EXPIRE_MINUTES", 60*
 MONGODB_URI = os.getenv("MONGODB_URI", "mongodb://localhost:27017")
 MONGODB_DB = os.getenv("MONGODB_DB", "notas_db")
 
+# Configuración de CORS
+ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "https://tu-dominio-frontend.com",
+]
