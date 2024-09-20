@@ -9,6 +9,7 @@ load_dotenv()
 SECRET_KEY = os.getenv("SECRET_KEY", "your_default_secret_key")
 ALGORITHM = os.getenv("ALGORITHM", "HS256")
 ACCESS_TOKEN_EXPIRE_MINUTES = 30  # Duración del token en minutos
+REFRESH_TOKEN_EXPIRE_MINUTES = 10080
 
 # Configuración de MongoDB
 MONGODB_URI = os.getenv("MONGODB_URI", "mongodb+srv://admin:Lamasrobada2803@cluster0.ypalzi1.mongodb.net/")

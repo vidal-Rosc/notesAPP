@@ -3,6 +3,7 @@ from pymongo import MongoClient
 from core.security import create_access_token, verify_password, get_current_user
 from core.config import MONGODB_URI, MONGODB_DB
 from core.schemas import UserCreate, UserLogin  # Importamos los esquemas
+from core.config import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES, REFRESH_TOKEN_EXPIRE_MINUTES
 from models.user import create_user, get_user_by_username
 
 auth_router = APIRouter(
