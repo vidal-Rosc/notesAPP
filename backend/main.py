@@ -1,6 +1,6 @@
 from http.client import HTTPException
-from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
+from fastapi import FastAPI, Request # type: ignore
+from fastapi.responses import JSONResponse # type: ignore
 from routes.auth import auth_router
 from routes.notes import notes_router
 from routes.protected import protected_router
