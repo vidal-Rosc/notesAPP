@@ -1,4 +1,4 @@
- # Configuraciones generales de la app (clave secreta, base de datos)
+# Configuraciones generales de la app (clave secreta, base de datos)
 import os
 from dotenv import load_dotenv
 
@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Configuración de JWT y base de datos
-SECRET_KEY = os.getenv("SECRET_KEY", "almost_got_me")
+SECRET_KEY = os.getenv("SECRET_KEY", "your_default_secret_key")
 ALGORITHM = os.getenv("ALGORITHM", "HS256")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 30))
 REFRESH_TOKEN_EXPIRE_MINUTES = int(os.getenv("REFRESH_TOKEN_EXPIRE_MINUTES", 60*24*7))  # 7 días
@@ -17,6 +17,6 @@ MONGODB_DB = os.getenv("MONGODB_DB", "notas_db")
 
 # Configuración de CORS
 ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "https://tu-dominio-frontend.com",
+    "http://localhost:3000",  # Dirección del frontend en desarrollo
+    "https://tu-dominio-frontend.com",  # Dirección del frontend en producción
 ]
