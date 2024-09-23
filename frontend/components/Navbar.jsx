@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const Nav = styled.nav`
   width: 100%;
@@ -18,7 +19,7 @@ const WelcomeMessage = styled.span`
   font-weight: bold;
 `;
 
-const LogoutButton = styled.button`
+const LogoutButton = styled(motion.button)`
   padding: 10px 20px;
   background-color: var(--color-secondary);
   color: #fff;
@@ -78,7 +79,14 @@ const Navbar = ({ username }) => {
   return (
     <Nav>
       <WelcomeMessage>Bienvenido, {username}</WelcomeMessage>
-      <LogoutButton onClick={handleLogout}>Cerrar Sesión</LogoutButton>
+      <LogoutButton
+        onClick={handleLogout}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        transition={{ type: 'spring', stiffness: 300 }}
+      >
+        Cerrar Sesión
+      </LogoutButton>
     </Nav>
   );
 };
