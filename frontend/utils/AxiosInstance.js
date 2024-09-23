@@ -2,7 +2,7 @@ import axios from 'axios';
 import { refreshAccessToken } from './auth'; // Función para refrescar tokens
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8000', // Asegúrate de que coincide con tu backend
+  baseURL: 'http://localhost:8000', // AAqui la URL del Backend
   headers: {
     'Content-Type': 'application/json',
   },
