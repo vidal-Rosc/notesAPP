@@ -2,17 +2,13 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axiosInstance from '../utils/axiosInstance';
 import Navbar from '../components/Navbar';
-import NoteItem from '../components/NotesList';
+import NoteList from '../components/NoteList'; // Cambiamos a NoteList
 import AddNoteModal from '../components/AddNoteModal';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const DashboardContainer = styled.div`
   padding: 20px 40px;
-`;
-
-const NotesGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
 `;
 
 const EmptyMessage = styled.p`
@@ -22,10 +18,31 @@ const EmptyMessage = styled.p`
   margin-top: 50px;
 `;
 
+const AddNoteButton = styled.button`
+  font-size: 2rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #45a049;
+    transform: scale(1.1);
+  }
+`;
+
 const DashboardPage = () => {
   const [notes, setNotes] = useState([]);
   const [username, setUsername] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const fetchNotes = async () => {
     try {
@@ -38,7 +55,6 @@ const DashboardPage = () => {
   };
 
   const fetchUser = () => {
-    // Decodificar el access token para obtener el nombre de usuario
     const token = localStorage.getItem('access_token');
     if (token) {
       try {
@@ -47,11 +63,9 @@ const DashboardPage = () => {
       } catch (error) {
         console.error('Error al decodificar el token:', error);
         if (error.response && error.response.status === 401) {
-          // Token inválido o expirado
           toast.error('Your session has expired. Please log in again.');
           navigate('/login');
         } else {
-          console.error('Error fetching user data:', error);
           toast.error('An error occurred while fetching user data.');
         }
       }
@@ -76,23 +90,22 @@ const DashboardPage = () => {
       <Navbar username={username} />
       <DashboardContainer>
         {notes.length > 0 ? (
-          <NotesGrid>
-            {notes.map((note) => (
-              <NoteItem key={note.id} note={note} />
-            ))}
-          </NotesGrid>
+          <NoteList notes={notes} fetchNotes={fetchNotes} />
         ) : (
-          <EmptyMessage>Aún no tienes notas. ¡Agrega una nueva!</EmptyMessage>
+          <EmptyMessage>No yet Notes. ¡Add a new one!</EmptyMessage>
         )}
+
         <AddNoteModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           onNoteAdded={handleNoteAdded}
         />
-        <button onClick={handleAddNote}>+</button> {/* Estiliza este botón según tus necesidades */}
+
+        <AddNoteButton onClick={handleAddNote}>+</AddNoteButton>
       </DashboardContainer>
     </>
   );
 };
 
 export default DashboardPage;
+
