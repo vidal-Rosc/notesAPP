@@ -62,6 +62,31 @@ const SubmitButton = styled.button`
     transform: scale(0.95);
   }
 `;
+const AddNoteButton = styled.button`
+  font-size: 2rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #45a049;
+    transform: scale(1.1);
+  }
+
+  &:active {
+    background-color: #3e8e41;
+    transform: scale(0.95);
+  }
+`;
 
 const AddNoteModal = ({ onClose, onNoteAdded }) => {
   const [noteContent, setNoteContent] = useState('');
@@ -87,7 +112,7 @@ const AddNoteModal = ({ onClose, onNoteAdded }) => {
   return (
     <ModalOverlay>
       <ModalContent>
-        <CloseButton className="add-note-button" onClick={onClose}>×</CloseButton>
+        <CloseButton  onClick={onClose}>×</CloseButton>
         <h2>Add</h2>
         <form onSubmit={handleSubmit}>
           <TextArea
@@ -96,7 +121,7 @@ const AddNoteModal = ({ onClose, onNoteAdded }) => {
             placeholder="Write your note here"
             required
           />
-          <SubmitButton type="submit">Add</SubmitButton>
+          <SubmitButton type="submit">+</SubmitButton>
         </form>
       </ModalContent>
     </ModalOverlay>
