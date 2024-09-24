@@ -33,7 +33,7 @@ const DashboardPage = () => {
       setNotes(response.data);
     } catch (error) {
       console.error('Error al obtener las notas:', error);
-      // Opcional: Manejar errores, mostrar notificaciones al usuario
+      toast.error('An error occurred while fetching notes. Please try again.');
     }
   };
 
@@ -46,7 +46,14 @@ const DashboardPage = () => {
         setUsername(payload.sub);
       } catch (error) {
         console.error('Error al decodificar el token:', error);
-        // Opcional: Manejar errores de token
+        if (error.response && error.response.status === 401) {
+          // Token inválido o expirado
+          toast.error('Your session has expired. Please log in again.');
+          navigate('/login');
+        } else {
+          console.error('Error fetching user data:', error);
+          toast.error('An error occurred while fetching user data.');
+        }
       }
     }
   };
