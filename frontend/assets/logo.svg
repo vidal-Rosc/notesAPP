@@ -1,0 +1,24 @@
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fondo Transparente -->
+  <rect width="100%" height="100%" fill="transparent"/>
+
+  <!-- Cerebro -->
+  <g transform="translate(50, 60)">
+    <path d="M50,30 C70,10 130,10 150,30 C170,50 170,90 150,110 C130,130 70,130 50,110 C30,90 30,50 50,30 Z" fill="#6C63FF"/>
+    <!-- Detalles del cerebro -->
+    <path d="M50,30 C60,40 70,40 80,30 C90,20 100,20 110,30" stroke="#fff" stroke-width="2" fill="none"/>
+    <path d="M50,50 C60,60 70,60 80,50 C90,40 100,40 110,50" stroke="#fff" stroke-width="2" fill="none"/>
+    <path d="M50,70 C60,80 70,80 80,70 C90,60 100,60 110,70" stroke="#fff" stroke-width="2" fill="none"/>
+  </g>
+
+  <!-- Pluma -->
+  <g transform="translate(100, 150) rotate(-45)">
+    <line x1="0" y1="0" x2="0" y2="-50" stroke="#FF6584" stroke-width="4"/>
+    <circle cx="0" cy="0" r="6" fill="#FF6584"/>
+  </g>
+
+  <!-- Texto "Mind Notes" -->
+  <text x="100" y="190" font-family="Arial, Helvetica, sans-serif" font-size="24" fill="#333" text-anchor="middle">
+    Mind Notes
+  </text>
+</svg>

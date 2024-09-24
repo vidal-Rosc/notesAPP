@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { refreshAccessToken } from './auth'; // Función para refrescar tokens
+import { refreshAccessToken } from './auth';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8000', // Asegúrate de que coincide con tu backend
+  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:8000', // backend URL
   headers: {
     'Content-Type': 'application/json',
   },
@@ -33,11 +33,15 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const newAccessToken = await refreshAccessToken();
+        // Actualizar el token en el localStorage
         localStorage.setItem('access_token', newAccessToken);
+        // Actualizar el encabezado Authorization
         axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
         originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+        // Repetir la solicitud original con el nuevo token
         return axiosInstance(originalRequest);
       } catch (err) {
+        console.error('Error al refrescar el token:', err);
         // Si falla el refresco, redirigir al login
         window.location.href = '/login';
         return Promise.reject(err);
