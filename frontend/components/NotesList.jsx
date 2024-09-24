@@ -26,12 +26,16 @@ const NoteCard = styled.div`
 `;
 
 const NoteContent = styled.p`
-  font-size: 1.2rem;
-  color: #333;
-  font-weight: bold;
+  font-size: 1.4rem;
+  color: #444;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.5px;
   flex: 1;
   margin-right: 1rem;
+  text-transform: capitalize;
 `;
+
 
 const EditInput = styled.input`
   flex: 1;
