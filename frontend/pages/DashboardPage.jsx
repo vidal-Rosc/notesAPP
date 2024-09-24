@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axiosInstance from '../utils/axiosInstance';
 import Navbar from '../components/Navbar';
-import NoteList from '../components/NoteList'; // Cambiamos a NoteList
+import NotesList from '../components/NotesList';
 import AddNoteModal from '../components/AddNoteModal';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
@@ -90,7 +90,7 @@ const DashboardPage = () => {
       <Navbar username={username} />
       <DashboardContainer>
         {notes.length > 0 ? (
-          <NoteList notes={notes} fetchNotes={fetchNotes} />
+          <NotesList notes={notes} fetchNotes={fetchNotes} /> 
         ) : (
           <EmptyMessage>No yet Notes. ¡Add a new one!</EmptyMessage>
         )}
