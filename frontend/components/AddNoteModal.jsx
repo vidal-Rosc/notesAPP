@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axiosInstance from '../utils/axiosInstance';
+import { toast } from 'react-toastify';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -72,28 +73,30 @@ const AddNoteModal = ({ onClose, onNoteAdded }) => {
     try {
       // Envía una solicitud POST al backend con el contenido de la nueva nota
       const response = await axiosInstance.post('/notes', { content: noteContent });
+      toast.success('Note added successfully!');
       onNoteAdded(response.data);  // Actualiza la lista de notas tras la creación
       setNoteContent('');          // Limpiar el contenido del textarea
       onClose();                   // Cierra el modal tras agregar la nota
     } catch (error) {
       console.error('Error al agregar nota:', error);
-      // Opcional: Mostrar mensaje de error al usuario
+      console.error('Error adding note:', error);
+      toast.error('An error occurred while adding the note. Please try again.');
     }
   };
 
   return (
     <ModalOverlay>
       <ModalContent>
-        <CloseButton onClick={onClose}>×</CloseButton>
-        <h2>Añadir Nueva Nota</h2>
+        <CloseButton className="add-note-button" onClick={onClose}>×</CloseButton>
+        <h2>Add</h2>
         <form onSubmit={handleSubmit}>
           <TextArea
             value={noteContent}
             onChange={(e) => setNoteContent(e.target.value)}
-            placeholder="Escribe tu nota aquí..."
+            placeholder="Write your note here"
             required
           />
-          <SubmitButton type="submit">Añadir Nota</SubmitButton>
+          <SubmitButton type="submit">Add</SubmitButton>
         </form>
       </ModalContent>
     </ModalOverlay>
