@@ -41,8 +41,8 @@ const Navbar = ({ username }) => {
 
   const handleLogout = async () => {
     try {
-      // Opcional: Llamar al endpoint de logout en el backend
-      // await axiosInstance.post('/auth/logout');
+      // Llamamos al endpoint de logout del backend
+      await axiosInstance.post('/auth/logout');
 
       // Eliminar tokens del Local Storage
       localStorage.removeItem('access_token');
@@ -52,14 +52,14 @@ const Navbar = ({ username }) => {
       navigate('/login');
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
-      // Opcional: Manejar errores de logout
+      alert('Error logging out, please try again.')
     }
   };
 
   return (
     <Nav>
-      <WelcomeMessage>Bienvenido, {username}</WelcomeMessage>
-      <LogoutButton onClick={handleLogout}>Cerrar Sesión</LogoutButton>
+      <WelcomeMessage>Welcome, {username}</WelcomeMessage>
+      <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
     </Nav>
   );
 };
