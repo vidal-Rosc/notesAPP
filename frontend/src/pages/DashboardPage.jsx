@@ -7,6 +7,34 @@ import AddNoteModal from '../components/AddNoteModal';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
+const WelcomeModal = styled.div`
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  text-align: center;
+`;
+
+const CloseButton = styled.button`
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #c82333;
+  }
+`;
+
 const DashboardContainer = styled.div`
   padding: 20px 40px;
 `;
@@ -42,6 +70,7 @@ const DashboardPage = () => {
   const [notes, setNotes] = useState([]);
   const [username, setUsername] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showWelcomeModal, setShowWelcomeModal] = useState(true); // Estado para el modal de bienvenida
   const navigate = useNavigate();
 
   const fetchNotes = async () => {
@@ -75,6 +104,14 @@ const DashboardPage = () => {
   useEffect(() => {
     fetchUser();
     fetchNotes();
+
+    // Mostrar el modal de bienvenida por 10 segundos
+    const timer = setTimeout(() => {
+      setShowWelcomeModal(false);
+    }, 10000); // 10 segundos
+
+    // Limpiar el timer cuando el componente se desmonte
+    return () => clearTimeout(timer);
   }, []);
 
   const handleAddNote = () => {
@@ -90,10 +127,24 @@ const DashboardPage = () => {
     <>
       <Navbar username={username} />
       <DashboardContainer>
-        {notes.length > 0 ? (
-          <NotesList notes={notes} fetchNotes={fetchNotes} /> 
-        ) : (
-          <EmptyMessage>No yet Notes. ¡Add a new one!</EmptyMessage>
+        {showWelcomeModal && (
+          <WelcomeModal>
+            <h2>Welcome, {username}!</h2>
+            <p>Thank you for registering. Start creating your notes now!</p>
+            <CloseButton onClick={() => setShowWelcomeModal(false)}>
+              Close
+            </CloseButton>
+          </WelcomeModal>
+        )}
+
+        {!showWelcomeModal && (
+          <>
+            {notes.length > 0 ? (
+              <NotesList notes={notes} fetchNotes={fetchNotes} /> 
+            ) : (
+              <EmptyMessage>No yet Notes. ¡Add a new one!</EmptyMessage>
+            )}
+          </>
         )}
 
         <AddNoteModal
@@ -109,4 +160,5 @@ const DashboardPage = () => {
 };
 
 export default DashboardPage;
+
 
