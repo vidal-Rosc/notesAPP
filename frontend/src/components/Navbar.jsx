@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import axiosInstance from '../utils/axiosInstance';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify'
 
 const Nav = styled.nav`
   width: 100%;
@@ -52,7 +53,7 @@ const Navbar = ({ username }) => {
       navigate('/login');
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
-      alert('Error logging out, please try again.')
+      toast.error('Error during logout. Please try again.');
     }
   };
 
