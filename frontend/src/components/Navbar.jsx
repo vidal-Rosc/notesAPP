@@ -56,7 +56,7 @@ const Navbar = ({ username }) => {
       
     } catch (error) {
       console.error('Error during logout:', error);
-      toast.error('Error during logout')
+      toast.error('Cant logout..., Try again')
     } finally {
       window.location.href = '/login';
     }
