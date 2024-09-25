@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { jwtDecode } from 'jwt-decode'
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
+import RegisterPage from './pages/RegisterPage';
 import GlobalStyles from './styles/GlobalStyles';
 
 const App = () => {
@@ -42,6 +43,12 @@ const App = () => {
           <Route
             path="/login"
             element={isAuthenticated() ? <Navigate to="/dashboard" /> : <LoginPage />}
+          />
+           <Route
+            path="/register"
+            element={
+              isAuthenticated() ? <Navigate to="/dashboard" /> : <RegisterPage />
+            }
           />
           <Route
             path="/dashboard"
