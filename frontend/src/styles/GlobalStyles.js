@@ -1,7 +1,15 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
-  /* Otros estilos globales aquí */
+  @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Roboto:wght@300;500&display=swap');
+
+  body {
+    font-family: 'Roboto', sans-serif;
+  }
+
+  .modal-content {
+    font-family: 'Lora', serif;
+  }
 
   .add-note-button {
     font-size: 2rem;
