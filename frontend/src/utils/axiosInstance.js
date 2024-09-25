@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { refreshAccessToken } from './auth';
 
 const axiosInstance = axios.create({
@@ -28,7 +27,6 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    const navigate = useNavigate();
 
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
@@ -52,10 +50,10 @@ axiosInstance.interceptors.response.use(
           // Si falla el refresco del token, eliminar los tokens y redirigir al login
           localStorage.removeItem('access_token');
           localStorage.removeItem('refresh_token');
-          navigate('/login'); // Redirigir al login
+          window.location.href = '/login'; // Redirigir al login
         }
       } else {
-        navigate('/login'); // Si no hay refresh token, redirigir al login
+        window.location.href = '/login'; // Si no hay refresh token, redirigir al login
       }
     }
 
@@ -63,5 +61,5 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-
 export default axiosInstance;
+
