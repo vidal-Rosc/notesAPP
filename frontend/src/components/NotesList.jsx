@@ -21,13 +21,18 @@ const NotesContainer = styled.div`
 
 const NoteCard = styled.div`
   background-color: #f9f9f9;
-  padding: 1.5rem;
+  padding: 20px;
+  border: 1px solid #ddd;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: transform 0.2s;
+  transition: all 0.3s ease;
+  &:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+  }
 
   @media (max-width: 768px) {
     padding: 1rem;
