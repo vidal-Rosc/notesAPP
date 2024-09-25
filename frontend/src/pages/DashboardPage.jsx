@@ -83,6 +83,7 @@ const DashboardPage = () => {
 
   const handleNoteAdded = (newNote) => {
     setNotes([newNote, ...notes]); // Agrega la nueva nota al inicio de la lista
+    setIsModalOpen(false); // Cierra el modal después de agregar la nota
   };
 
   return (
