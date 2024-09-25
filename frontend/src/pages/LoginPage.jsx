@@ -89,7 +89,7 @@ const LoginPage = () => {
       localStorage.setItem('refresh_token', refresh_token);
 
       // Redirigir al Dashboard
-      navigate('/dashboard');
+      window.location.href = '/dashboard';
     } catch (err) {
       console.error('Error en el inicio de sesión:', err);
       setError(err.response?.data?.detail || 'Error al iniciar sesión');
