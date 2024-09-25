@@ -8,6 +8,15 @@ const NotesContainer = styled.div`
   flex-direction: column;
   gap: 1.5rem;
   margin-top: 2rem;
+
+  @media (max-width: 768px) {
+    gap: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    margin-top: 1rem;
+    gap: 0.5rem;
+  }
 `;
 
 const NoteCard = styled.div`
@@ -15,40 +24,63 @@ const NoteCard = styled.div`
   padding: 1.5rem;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  transition: transform 0.2s;
 
-  &:hover {
-    transform: scale(1.02);
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.8rem;
+    font-size: 0.8rem;
   }
 `;
 
 const NoteContent = styled.p`
-  font-size: 1.4rem;
-  color: #444;
-  font-weight: 600;
-  line-height: 1.5;
-  letter-spacing: 0.5px;
-  flex: 1;
-  margin-right: 1rem;
-  text-transform: capitalize;
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 1rem;
+  word-wrap: break-word;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+  }
 `;
 
 
 const EditInput = styled.input`
   flex: 1;
-  margin-right: 1rem;
+  margin-bottom: 1rem;
   padding: 0.5rem;
   font-size: 1.2rem;
   border-radius: 8px;
   border: 1px solid #ccc;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    padding: 0.4rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const ButtonsContainer = styled.div`
   display: flex;
   gap: 1rem;
+
+  @media (max-width: 768px) {
+    gap: 0.5rem;
+  }
 `;
 
 const EditButton = styled.button`
@@ -62,6 +94,16 @@ const EditButton = styled.button`
 
   &:hover {
     background-color: #e0a800;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.4rem;
+    font-size: 14px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.3rem;
+    font-size: 12px;
   }
 `;
 

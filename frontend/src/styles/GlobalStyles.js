@@ -5,6 +5,44 @@ const GlobalStyles = createGlobalStyle`
 
   body {
     font-family: 'Roboto', sans-serif;
+    background-color: #f7f7f7
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  /* Estilos generales para pantallas pequeñas */
+  @media (max-width: 768px) {
+    body {
+      font-size: 14px;
+    }
+
+    h1, h2, h3 {
+      font-size: 1.5rem;
+    }
+
+    button {
+      font-size: 14px;
+      padding: 10px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    body {
+      font-size: 12px;
+    }
+
+    h1, h2, h3 {
+      font-size: 1.2rem;
+    }
+
+    button {
+      font-size: 12px;
+      padding: 8px;
+    }
   }
 
   .modal-content {
