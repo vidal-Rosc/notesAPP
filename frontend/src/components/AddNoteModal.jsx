@@ -91,18 +91,18 @@ const AddNoteModal = ({ isOpen, onClose, onNoteAdded }) => {
   return (
     <ModalContainer>
       <ModalContent>
-        <CloseButton onClick={onClose}>&times;</CloseButton> {/* Cerrar modal */}
+        <CloseButton onClick={onClose}>&times;</CloseButton> {/* Cierra el modal */}
         <h2>Add a new note</h2>
         <Input
           type="text"
           placeholder="Title"
           value={title}
-          onChange={(e) => setTitle(e.target.value)} // Actualizar título
+          onChange={(e) => setTitle(e.target.value)} // Actualiza título
         />
         <TextArea
           placeholder="Note content"
           value={content}
-          onChange={(e) => setContent(e.target.value)} // Actualizar contenido
+          onChange={(e) => setContent(e.target.value)} // Actualiza contenido
         />
         {/* Selector de tipo de letra */}
         <label htmlFor="fontStyle">Choose Font Style:</label>
@@ -111,7 +111,7 @@ const AddNoteModal = ({ isOpen, onClose, onNoteAdded }) => {
           <option value="italic">Italic</option>
           <option value="bold">Bold</option>
         </select>
-        <SaveButton onClick={handleSave}>Save</SaveButton> {/* Guardar nota */}
+        <SaveButton onClick={handleSave}>Save</SaveButton> {/* Guarda la nota */}
       </ModalContent>
     </ModalContainer>
   );
