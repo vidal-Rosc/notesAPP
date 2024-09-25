@@ -144,7 +144,9 @@ const NoNotesMessage = styled.p`
 
 const NotesList = ({ notes, fetchNotes }) => {
   const [editingNote, setEditingNote] = useState(null);
+  const [editedTitle, setEditedTitle] = useState('');
   const [editedContent, setEditedContent] = useState('');
+  
 
   // Función para eliminar una nota
   const handleDelete = async (id) => {
@@ -159,13 +161,17 @@ const NotesList = ({ notes, fetchNotes }) => {
   // Función para editar una nota
   const handleEdit = (note) => {
     setEditingNote(note.id);
+    setEditedTitle(note.title);
     setEditedContent(note.content);
   };
 
   // Función para guardar la edición de una nota
   const saveEdit = async (id) => {
     try {
-      await axios.put(`/notes/${id}`, { content: editedContent });
+      await axios.put(`/notes/${id}`, {
+        title: editedTitle,
+        content: editedContent,
+      });
       setEditingNote(null);
       fetchNotes(); // Refresca la lista de notas
     } catch (error) {
@@ -181,14 +187,25 @@ const NotesList = ({ notes, fetchNotes }) => {
         notes.map((note) => (
           <NoteCard key={note.id}>
             {editingNote === note.id ? (
-              <EditInput
-                value={editedContent}
-                onChange={(e) => setEditedContent(e.target.value)}
-              />
+              <>
+                <EditInput
+                  value={editedTitle}
+                  onChange={(e) => setEditedTitle(e.target.value)}
+                  placeholder="Edit title"
+                />
+                <EditInput
+                  value={editedContent}
+                  onChange={(e) => setEditedContent(e.target.value)}
+                  placeholder="Edit content"
+                />
+              </>
             ) : (
-              <NoteContent>
-                {note.content.charAt(0).toUpperCase() + note.content.slice(1)}
-              </NoteContent>
+              <>
+                <h3>{note.title}</h3>
+                <NoteContent>
+                  {note.content.charAt(0).toUpperCase() + note.content.slice(1)}
+                </NoteContent>
+              </>
             )}
             <ButtonsContainer>
               {editingNote === note.id ? (
