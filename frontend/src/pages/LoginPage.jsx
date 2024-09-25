@@ -117,6 +117,9 @@ const LoginPage = () => {
         {error && <ErrorMessage>{error}</ErrorMessage>}
         <Button type="submit">Iniciar Sesión</Button>
       </LoginForm>
+      <p>
+        Not registered yet? <Link to="/register">Create an account</Link>
+      </p>
     </LoginContainer>
   );
 };
