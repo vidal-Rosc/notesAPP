@@ -28,28 +28,38 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // Si el error es 401 y no se ha intentado ya, intentar refrescar el token
-    if (error.response && error.response.status === 401 && !originalRequest._retry) {
+    if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-      try {
-        const newAccessToken = await refreshAccessToken();
-        // Actualizar el token en el localStorage
-        localStorage.setItem('access_token', newAccessToken);
-        // Actualizar el encabezado Authorization
-        axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
-        originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
-        // Repetir la solicitud original con el nuevo token
-        return axiosInstance(originalRequest);
-      } catch (err) {
-        console.error('Error al refrescar el token:', err);
-        // Si falla el refresco, redirigir al login
-        window.location.href = '/login';
-        return Promise.reject(err);
+
+      // Obtener el refresh token desde el localStorage
+      const refreshToken = localStorage.getItem('refresh_token');
+
+      if (refreshToken) {
+        try {
+          // Intentar refrescar el token
+          const { data } = await axiosInstance.post('/auth/refresh', { refresh_token: refreshToken });
+
+          // Guardar el nuevo access token
+          localStorage.setItem('access_token', data.access_token);
+
+          // Actualizar el header del access token
+          axiosInstance.defaults.headers['Authorization'] = `Bearer ${data.access_token}`;
+
+          return axiosInstance(originalRequest); // Reintentar la solicitud original
+        } catch (refreshError) {
+          // Si falla el refresco del token, eliminar los tokens y redirigir al login
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('refresh_token');
+          window.location.href = '/login'; // Redirigir al login
+        }
+      } else {
+        window.location.href = '/login'; // Si no hay refresh token, redirigir al login
       }
     }
 
     return Promise.reject(error);
   }
 );
+
 
 export default axiosInstance;
