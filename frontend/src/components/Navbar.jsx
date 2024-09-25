@@ -42,18 +42,15 @@ const Navbar = ({ username }) => {
 
   const handleLogout = async () => {
     try {
-      // Llamamos al endpoint de logout del backend
-      await axiosInstance.post('/auth/logout');
-
-      // Eliminar tokens del Local Storage
+      await axiosInstance.post('/auth/logout'); // Llama al backend para invalidar el refresh token
+    } catch (error) {
+      console.error('Error during logout:', error);
+      toast.error('Error during logout')
+    } finally {
+      // Eliminar tokens y redirigir al login
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
-
-      // Redirigir al login
       navigate('/login');
-    } catch (error) {
-      console.error('Error al cerrar sesión:', error);
-      toast.error('Error during logout. Please try again.');
     }
   };
 
