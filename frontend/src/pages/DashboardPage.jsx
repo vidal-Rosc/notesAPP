@@ -70,7 +70,7 @@ const DashboardPage = () => {
   const [notes, setNotes] = useState([]);
   const [username, setUsername] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [showWelcomeModal, setShowWelcomeModal] = useState(true); // Estado para el modal de bienvenida
+  const [showWelcomeMessage, setShowWelcomeMessage] = useState(true); // Estado para el modal de bienvenida
   const navigate = useNavigate();
 
   const fetchNotes = async () => {
@@ -105,13 +105,15 @@ const DashboardPage = () => {
     fetchUser();
     fetchNotes();
 
-    // Mostrar el modal de bienvenida por 10 segundos
-    const timer = setTimeout(() => {
-      setShowWelcomeModal(false);
-    }, 10000); // 10 segundos
-
-    // Limpiar el timer cuando el componente se desmonte
-    return () => clearTimeout(timer);
+    // Mostrar mensaje de bienvenida si es un nuevo usuario
+    const isNewUser = localStorage.getItem('isNewUser');
+    if (isNewUser) {
+      setShowWelcomeMessage(true);
+      setTimeout(() => {
+        setShowWelcomeMessage(false);
+        localStorage.removeItem('isNewUser'); // Borrar el flag después de mostrar el mensaje
+      }, 10000); // Ocultar el mensaje después de 10 segundos
+    }
   }, []);
 
   const handleAddNote = () => {
@@ -123,28 +125,27 @@ const DashboardPage = () => {
     setIsModalOpen(false); // Cierra el modal después de agregar la nota
   };
 
+  const handleCloseWelcome = () => {
+    setShowWelcomeMessage(false);
+    localStorage.removeItem('isNewUser'); // Borrar el flag manualmente si el usuario cierra el modal
+  };
+
   return (
     <>
       <Navbar username={username} />
       <DashboardContainer>
-        {showWelcomeModal && (
+        {showWelcomeMessage && (
           <WelcomeModal>
             <h2>Welcome, {username}!</h2>
             <p>Thank you for registering. Tell me your Thoughts!</p>
-            <CloseButton onClick={() => setShowWelcomeModal(false)}>
-              Close
-            </CloseButton>
+            <CloseButton onClick={handleCloseWelcome}>X</CloseButton>
           </WelcomeModal>
         )}
 
-        {!showWelcomeModal && (
-          <>
-            {notes.length > 0 ? (
-              <NotesList notes={notes} fetchNotes={fetchNotes} /> 
-            ) : (
-              <EmptyMessage>No yet Notes. ¡Add a new one!</EmptyMessage>
-            )}
-          </>
+        {notes.length > 0 ? (
+          <NotesList notes={notes} fetchNotes={fetchNotes} /> 
+        ) : (
+          <EmptyMessage>No yet Notes. ¡Add a new one!</EmptyMessage>
         )}
 
         <AddNoteModal
