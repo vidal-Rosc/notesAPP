@@ -130,7 +130,7 @@ const DashboardPage = () => {
         {showWelcomeModal && (
           <WelcomeModal>
             <h2>Welcome, {username}!</h2>
-            <p>Thank you for registering. Start creating your notes now!</p>
+            <p>Thank you for registering. Tell me your Thoughts!</p>
             <CloseButton onClick={() => setShowWelcomeModal(false)}>
               Close
             </CloseButton>

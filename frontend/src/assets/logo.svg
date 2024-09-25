@@ -19,6 +19,6 @@
 
   <!-- Texto "Mind Notes" -->
   <text x="100" y="190" font-family="Arial, Helvetica, sans-serif" font-size="24" fill="#333" text-anchor="middle">
-    Mind Notes
+    Notes
   </text>
 </svg>

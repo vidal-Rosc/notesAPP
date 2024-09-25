@@ -65,6 +65,20 @@ const Button = styled.button`
     transform: scale(0.95);
   }
 `;
+const RegistrationRedirect = styled.p`
+  margin-top: 20px;
+  color: #666;
+  font-size: 14px;
+
+  a {
+    color: #FF6584;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
 
 const ErrorMessage = styled.p`
   color: red;
@@ -117,10 +131,11 @@ const LoginPage = () => {
         />
         {error && <ErrorMessage>{error}</ErrorMessage>}
         <Button type="submit">Iniciar Sesión</Button>
-      </LoginForm>
-      <p>
+        <RegistrationRedirect>
         Not registered yet? <Link to="/register">Create an account</Link>
-      </p>
+        </RegistrationRedirect>
+      </LoginForm>
+      
     </LoginContainer>
   );
 };
