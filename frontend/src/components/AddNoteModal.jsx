@@ -38,31 +38,35 @@ const CloseButton = styled.button`
 `;
 
 const Input = styled.input`
-  padding: 10px;
-  font-size: 1rem;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+  font-family: 'Lora', serif;
+  font-size: 24px;
+  font-weight: bold;
 `;
 
 const TextArea = styled.textarea`
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
   padding: 10px;
-  font-size: 1rem;
   border-radius: 8px;
   border: 1px solid #ccc;
-  height: 100px;
+  width: 100%;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
 const SaveButton = styled.button`
-  padding: 10px;
-  background-color: #4caf50;
-  color: white;
+  background-color: #007bff;
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  padding: 10px 20px;
   border: none;
-  border-radius: 8px;
+  border-radius: 5px;
   cursor: pointer;
-  font-size: 1rem;
+  transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #45a049;
+    background-color: #0056b3;
   }
 `;
 
