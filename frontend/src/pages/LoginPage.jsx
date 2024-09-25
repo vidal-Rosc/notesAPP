@@ -96,6 +96,8 @@ const LoginPage = () => {
     e.preventDefault();
     setError('');
     try {
+      // Limpia la bandera de nuevo usuario antes de intentar login
+      localStorage.removeItem('isNewUser');
       const response = await axiosInstance.post('/auth/login', { username, password });
       const { access_token, refresh_token } = response.data;
 
