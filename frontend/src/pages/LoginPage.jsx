@@ -99,7 +99,7 @@ const LoginPage = () => {
   return (
     <LoginContainer>
       <LoginForm onSubmit={handleSubmit}>
-        <Title>Notes APP</Title>
+        <Title>Notes</Title>
         <Input
           type="text"
           placeholder="Nombre de usuario"

@@ -38,19 +38,27 @@ const LogoutButton = styled.button`
 `;
 
 const Navbar = ({ username }) => {
-  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
-      await axiosInstance.post('/auth/logout'); // Llama al backend para invalidar el refresh token
+      // Obtiene el refresh token del localstorage
+      const refreshToken = localStorage.getItem('refresh_token');
+      if (refreshToken) {
+        // Llama al backend para invalidar el refresh token
+        await axiosInstance.post('/auth/logout', { refresh_token: refreshToken });
+      }
+      // Eliminar tokens y redirigir al login
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
+
+      // Redirige al login
+      window.location.href = '/login';  
+      
     } catch (error) {
       console.error('Error during logout:', error);
       toast.error('Error during logout')
     } finally {
-      // Eliminar tokens y redirigir al login
-      localStorage.removeItem('access_token');
-      localStorage.removeItem('refresh_token');
-      navigate('/login');
+      window.location.href = '/login';
     }
   };
 
