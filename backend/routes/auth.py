@@ -24,10 +24,20 @@ async def register(user: UserCreate):
     if existing_user:
         raise HTTPException(status_code=400, detail="El usuario ya existe")
     if not user.username or not user.password:
-        raise HTTPException(status_code=400, detail="Both email and password are required.")
+        raise HTTPException(status_code=400, detail="Both username and password are required.")
     
     user_id = create_user(db, user)
-    return {"message": "Usuario registrado exitosamente", "user_id": user_id}
+
+    # Generar tokens
+    access_token = create_access_token(data={"sub": user.username}) 
+    refresh_token = create_refresh_token(data={"sub": user.username})  
+
+    return {
+        "message": "Usuario registrado exitosamente",
+        "user_id": user_id,
+        "access_token": access_token,  # Retorna el access token
+        "refresh_token": refresh_token   # Retorna el refresh token
+    }
 
 # Ruta para hacer login y obtener tokens
 @auth_router.post("/login", response_model=Token)

@@ -88,24 +88,29 @@ const RegisterPage = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     // Validar que los campos no estén vacíos
-  if (!username || !password) {
-    toast.error('Username and password are required.');
+    if (!username || !password) {
+      toast.error('Username and password are required.');
     return;
-  }
+    }
     try {
       const response = await registerUser(username, password);
+      // Para verificar si recibimos la respuesta correcta
+      console.log(response); 
       
-      if (response.status === 201) {
+      if ((response.status === 201 || response.status === 200)) {
         // Almacenar los tokens y establecer el usuario como nuevo
         localStorage.setItem('access_token', response.data.access_token);
         localStorage.setItem('refresh_token', response.data.refresh_token);
         localStorage.setItem('isNewUser', 'true'); // Marcar como nuevo usuario
 
-        toast.success('Registration successful! Redirecting to the dashboard...');
-
+        //toast.success('Registration successful! Redirecting to the dashboard...');
+        console.log("Navigating to dashboard...");
         // Redirigir al dashboard
         navigate('/dashboard');
+      } else {
+        toast.error('Registration failed. Please try again.');
       }
+
     } catch (error) {
       if (error.response && error.response.status === 400) {
         toast.error('Registration failed. Please check the data.');

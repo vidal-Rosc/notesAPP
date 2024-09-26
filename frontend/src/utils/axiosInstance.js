@@ -5,12 +5,16 @@ const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_URL || 'http://localhost:8000', // backend URL
   headers: {
     'Content-Type': 'application/json',
+    'Cache-Control': 'no-cache',  // Desactiva el cache
+    'Pragma': 'no-cache',         // Desactiva el cache
+    'Expires': '0',               // Desactiva el cache
+    
   },
 });
 
 //Registra un nuevo ususario
-export const registerUser = (email, password) => {
-  return axiosInstance.post('/auth/register', { email, password });
+export const registerUser = (username, password) => {
+  return axiosInstance.post('/auth/register', { username:username, password:password});
 };
 
 // Interceptor para añadir el access token en cada solicitud
