@@ -88,13 +88,18 @@ const RegisterPage = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await axiosInstance.post('/auth/register', { username, password });
+      const response = await axiosInstance.post('/auth/register', { username, password });
       
-      // Flag para indicar que el usuario acaba de registrarse
-      localStorage.setItem('isNewUser', 'true');
-      toast.success('Registration successful! Redirecting...');
-      navigate('/dashboard'); // Redirige al dashboard tras registro exitoso
+      if (response.status === 201) {
+        // Almacenar los tokens y establecer el usuario como nuevo
+        localStorage.setItem('access_token', response.data.access_token);
+        localStorage.setItem('refresh_token', response.data.refresh_token);
+        localStorage.setItem('isNewUser', 'true'); // Marcar como nuevo usuario
+
+        toast.success('Registration successful! Redirecting to the dashboard...');
+      }
     } catch (error) {
+      console.error('Error during registration:', error);
       toast.error('Registration failed. Please try again.');
     }
   };

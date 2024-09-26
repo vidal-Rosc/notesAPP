@@ -70,7 +70,7 @@ const DashboardPage = () => {
   const [notes, setNotes] = useState([]);
   const [username, setUsername] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [showWelcomeMessage, setShowWelcomeMessage] = useState(true); // Estado para el modal de bienvenida
+  const [showWelcomeModal, setShowWelcomeModal] = useState(true); // Estado para el modal de bienvenida
   const navigate = useNavigate();
 
   const fetchNotes = async () => {
@@ -105,14 +105,22 @@ const DashboardPage = () => {
     fetchUser();
     fetchNotes();
 
-    // Mostrar mensaje de bienvenida si es un nuevo usuario
+    // Mostrar el modal de bienvenida solo si se trata de un nuevo registro
     const isNewUser = localStorage.getItem('isNewUser');
+
+    // Mostrar el modal de bienvenida solo si se trata de un nuevo registro
     if (isNewUser) {
-      setShowWelcomeMessage(true);
-      setTimeout(() => {
-        setShowWelcomeMessage(false);
-        localStorage.removeItem('isNewUser'); // Borrar el flag después de mostrar el mensaje
-      }, 10000); // Ocultar el mensaje después de 10 segundos
+      setShowWelcomeModal(true);
+
+      // Remover la bandera después de mostrar el modal
+      localStorage.removeItem('isNewUser');
+
+      // Cerrar el modal automáticamente después de 10 segundos
+    const timer = setTimeout(() => {
+        setShowWelcomeModal(false);
+      }, 10000);
+
+      return () => clearTimeout(timer);
     }
   }, []);
 
@@ -126,7 +134,7 @@ const DashboardPage = () => {
   };
 
   const handleCloseWelcome = () => {
-    setShowWelcomeMessage(false);
+    setShowWelcomeModal(false);
     localStorage.removeItem('isNewUser'); // Borrar el flag manualmente si el usuario cierra el modal
   };
 
@@ -134,11 +142,11 @@ const DashboardPage = () => {
     <>
       <Navbar username={username} />
       <DashboardContainer>
-        {showWelcomeMessage && (
+        {showWelcomeModal && (
           <WelcomeModal>
             <h2>Welcome, {username}!</h2>
             <p>Thank you for registering. Tell me your Thoughts!</p>
-            <CloseButton onClick={handleCloseWelcome}>X</CloseButton>
+            <CloseButton onClick={() => setShowWelcomeModal(false)}>X</CloseButton>
           </WelcomeModal>
         )}
 

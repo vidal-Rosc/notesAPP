@@ -87,17 +87,17 @@ const ErrorMessage = styled.p`
 `;
 
 const LoginPage = () => {
-  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Limpia la bandera de nuevo usuario antes de intentar login
+    localStorage.removeItem('isNewUser');
     setError('');
     try {
-      // Limpia la bandera de nuevo usuario antes de intentar login
-      localStorage.removeItem('isNewUser');
+      
       const response = await axiosInstance.post('/auth/login', { username, password });
       const { access_token, refresh_token } = response.data;
 
