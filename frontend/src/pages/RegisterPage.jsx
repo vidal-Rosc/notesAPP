@@ -97,18 +97,20 @@ const RegisterPage = () => {
       // Para verificar si recibimos la respuesta correcta
       console.log(response); 
       
-      if ((response.status === 201 || response.status === 200)) {
+      if ((response.data.access_token && response.data.refresh_token)) {
         // Almacenar los tokens y establecer el usuario como nuevo
         localStorage.setItem('access_token', response.data.access_token);
         localStorage.setItem('refresh_token', response.data.refresh_token);
         localStorage.setItem('isNewUser', 'true'); // Marcar como nuevo usuario
 
-        //toast.success('Registration successful! Redirecting to the dashboard...');
+        toast.success('Registration successful! Redirecting to the dashboard...');
         console.log("Navigating to dashboard...");
         // Redirigir al dashboard
-        navigate('/dashboard');
+        window.location.href = '/dashboard';
       } else {
-        toast.error('Registration failed. Please try again.');
+        // Si no tenemos tokens, mostrar un mensaje de error
+        toast.error('Registration successful, but no tokens returned. Please log in.');
+        navigate('/login'); // Redirigir a login si no hay tokens
       }
 
     } catch (error) {
