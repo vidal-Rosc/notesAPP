@@ -8,6 +8,11 @@ const axiosInstance = axios.create({
   },
 });
 
+//Registra un nuevo ususario
+export const registerUser = (email, password) => {
+  return axiosInstance.post('/auth/register', { email, password });
+};
+
 // Interceptor para añadir el access token en cada solicitud
 axiosInstance.interceptors.request.use(
   (config) => {

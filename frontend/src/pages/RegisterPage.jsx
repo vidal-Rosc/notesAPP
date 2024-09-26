@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../utils/axiosInstance';
+import { registerUser } from '../utils/axiosInstance'
 import logo from '../assets/logo.svg';
 import { toast } from 'react-toastify';
 
@@ -87,8 +87,13 @@ const RegisterPage = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    // Validar que los campos no estén vacíos
+  if (!username || !password) {
+    toast.error('Username and password are required.');
+    return;
+  }
     try {
-      const response = await axiosInstance.post('/auth/register', { username, password });
+      const response = await registerUser(username, password);
       
       if (response.status === 201) {
         // Almacenar los tokens y establecer el usuario como nuevo
@@ -97,10 +102,17 @@ const RegisterPage = () => {
         localStorage.setItem('isNewUser', 'true'); // Marcar como nuevo usuario
 
         toast.success('Registration successful! Redirecting to the dashboard...');
+
+        // Redirigir al dashboard
+        navigate('/dashboard');
       }
     } catch (error) {
-      console.error('Error during registration:', error);
-      toast.error('Registration failed. Please try again.');
+      if (error.response && error.response.status === 400) {
+        toast.error('Registration failed. Please check the data.');
+      } else {
+        console.error('Error during registration:', error);
+        toast.error('An unexpected error occurred.');
+      }
     }
   };
 
