@@ -70,7 +70,7 @@ const DashboardPage = () => {
   const [notes, setNotes] = useState([]);
   const [username, setUsername] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [showWelcomeModal, setShowWelcomeModal] = useState(true); // Estado para el modal de bienvenida
+  const [showWelcomeModal, setShowWelcomeModal] = useState(false); // Estado para el modal de bienvenida
   const navigate = useNavigate();
 
   const fetchNotes = async () => {
@@ -146,7 +146,7 @@ const DashboardPage = () => {
           <WelcomeModal>
             <h2>Welcome, {username}!</h2>
             <p>Thank you for registering. Tell me your Thoughts!</p>
-            <CloseButton onClick={() => setShowWelcomeModal(false)}>X</CloseButton>
+            <CloseButton onClick={handleCloseWelcome}>X</CloseButton>
           </WelcomeModal>
         )}
 
