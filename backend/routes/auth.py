@@ -23,6 +23,8 @@ async def register(user: UserCreate):
     existing_user = get_user_by_username(db, user.username)
     if existing_user:
         raise HTTPException(status_code=400, detail="El usuario ya existe")
+    if not user.username or not user.password:
+        raise HTTPException(status_code=400, detail="Both email and password are required.")
     
     user_id = create_user(db, user)
     return {"message": "Usuario registrado exitosamente", "user_id": user_id}
