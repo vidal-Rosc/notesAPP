@@ -1,0 +1,12 @@
+build:
+  docker:
+    web:
+      dockerfile: ./frontend/Dockerfile
+      context: ./frontend
+    backend:
+      dockerfile: ./backend/Dockerfile
+      context: ./backend
+
+release:
+  command:
+    - npm run migrate # Solo si tienes migraciones en tu backend
