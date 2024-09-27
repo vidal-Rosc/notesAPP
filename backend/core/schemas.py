@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 from pydantic import BaseModel, Field, validator
 from typing import Optional
 
@@ -84,7 +84,7 @@ class Note(NoteBase):
     owner: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 # Esquema para los tokens
 class Token(BaseModel):

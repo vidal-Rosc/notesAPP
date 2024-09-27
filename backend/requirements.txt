@@ -1,9 +1,0 @@
-#Requirements
-fastapi
-uvicorn
-pymongo
-python-jose
-passlib[bcrypt]
-python-dotenv
-
-#Please install using: pip install -r requirements.txt
