@@ -4,7 +4,7 @@ from fastapi.responses import JSONResponse # type: ignore
 from routes.auth import auth_router
 from routes.notes import notes_router
 from routes.protected import protected_router
-from fastapi.middleware.cors import CORSMiddleware # type: ignore
+from fastapi.middleware.cors import CORSMiddleware
 from core.config import ALLOWED_ORIGINS
 
 app = FastAPI(
@@ -13,13 +13,17 @@ app = FastAPI(
     version="1.0.0",
 )
 
+# Define allowed origins (the frontend URL)
+origins = [
+    "https://v-r-notes-frontend-4e1ff360aa1f.herokuapp.com",  # Frontend URL Puede ser definido en .config como ALLOWED_ORIGINS
+]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=ALLOWED_ORIGINS,  # Permitir estos orígenes
+    allow_origins=origins,  # Permite estos orígenes
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],  # Allow all HTTP methods
+    allow_headers=["*"],  # Allow all headers
 )
 
 # Registrar las rutas de autenticación con el prefijo /auth

@@ -98,7 +98,7 @@ const LoginPage = () => {
     setError('');
     try {
       
-      const response = await axiosInstance.post('/auth/login', { username, password });
+      const response = await axiosInstance.post(`${process.env.REACT_APP_API_URL}/auth/login`, { username, password });
       const { access_token, refresh_token } = response.data;
 
       // Almacenar tokens en Local Storage

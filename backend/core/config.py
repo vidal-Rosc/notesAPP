@@ -18,5 +18,5 @@ MONGODB_DB = os.getenv("MONGODB_DB", "notas_db")
 # Configuración de CORS
 ALLOWED_ORIGINS = [
     "http://localhost:3000",  # Dirección del frontend en desarrollo
-    "https://tu-dominio-frontend.com",  # Dirección del frontend en producción
+    "https://v-r-notes-frontend-4e1ff360aa1f.herokuapp.com",  # Dirección del frontend en producción
 ]

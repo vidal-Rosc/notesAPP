@@ -8,7 +8,7 @@ export const refreshAccessToken = async () => {
   }
 
   try {
-    const response = await axiosInstance.post('/auth/refresh', { refresh_token: refreshToken });
+    const response = await axiosInstance.post(`${process.env.REACT_APP_API_URL}/auth/refresh`, { refresh_token: refreshToken });
     const { access_token, refresh_token } = response.data;
     // Actualizar el refresh token en el localStorage
     localStorage.setItem('refresh_token', refresh_token);

@@ -1,15 +1,15 @@
 import axios from 'axios';
-import { refreshAccessToken } from './auth';
+
 
 const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:8000', // backend URL
+  baseURL: 'https://v-r-notes-backend-984a522b7c9d.herokuapp.com', // backend URL
   headers: {
     'Content-Type': 'application/json',
-    'Cache-Control': 'no-cache',  // Desactiva el cache
-    'Pragma': 'no-cache',         // Desactiva el cache
-    'Expires': '0',               // Desactiva el cache
-    
+    //'Cache-Control': 'no-cache',  // Desactiva el cache
+    //'Pragma': 'no-cache',         // Desactiva el cache
+    //'Expires': '0',               // Desactiva el cache
   },
+  withCredentials: true, 
 });
 
 //Registra un nuevo ususario
@@ -46,7 +46,7 @@ axiosInstance.interceptors.response.use(
       if (refreshToken) {
         try {
           // Intentar refrescar el token
-          const { data } = await axiosInstance.post('/auth/refresh', { refresh_token: refreshToken });
+          const { data } = await axiosInstance.post('auth/refresh', { refresh_token: refreshToken });
 
           // Guardar el nuevo access token
           localStorage.setItem('access_token', data.access_token);
@@ -71,4 +71,3 @@ axiosInstance.interceptors.response.use(
 );
 
 export default axiosInstance;
-

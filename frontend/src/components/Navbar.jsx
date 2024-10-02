@@ -45,7 +45,7 @@ const Navbar = ({ username }) => {
       const refreshToken = localStorage.getItem('refresh_token');
       if (refreshToken) {
         // Llama al backend para invalidar el refresh token
-        await axiosInstance.post('/auth/logout', { refresh_token: refreshToken });
+        await axiosInstance.post(`${process.env.REACT_APP_API_URL}/auth/logout`, { refresh_token: refreshToken });
       }
       // Eliminar tokens y redirigir al login
       localStorage.removeItem('access_token');
